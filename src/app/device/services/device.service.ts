@@ -1,29 +1,26 @@
 import { Injectable } from '@angular/core';
-//import { Device } from '../models/device.model';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Device } from '../models/device.model';
-//import { HttpClient, HttpHeaders  } from '@angular/common/http';
-//import { Observable } from 'rxjs';
-//import { map, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
 
-  constructor() {
-    //private http: HttpClient
-  }
-
   private url = `${environment.url_eldorado}`;
+
+  constructor(private httpClient: HttpClient) { }
   // const headers = new HttpHeaders().set('Authorization', `bearer ${token}`);
 
-  //httpOptions = {
-  //   headers: new HttpHeaders({
-  //    'Content-Type': 'application/json'
-  //   })
-  //}  
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
 
   devices: Device[] = [];
 
@@ -38,40 +35,34 @@ export class DeviceService {
   }
 
   // Create Device
-  //createDevice(device: Device): Observable<Device> {
-  //  return this.http
-  // .post<Device>(this.url + '/devices', 
-  ////  JSON.stringify(device), this.httpOptions) 
-  //  .pipe(
-  //    tap(data => { JSON.stringify( data )
-  ////    }
-  //  ));
-  //}   
-
-  /*
-  getDeviceList():  Observable<Device[]> {
-    return this.http.get<Device[]>(`${this.url}/devices`)
-    .pipe(
-      tap(data => { JSON.stringify( data )
-      }
-    ));
+  createDevice(device: Device): Observable<Device> {
+    return this.httpClient
+      .post<Device>(this.url, JSON.stringify(device), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
   }
-*/
-  // return this.http.get(`${this.url}/devices`, { headers: this.header() });
 
-  /* */
+  // Get device data
+  getDeviceList2(): Observable<Device> {
+    return this.httpClient
+      .get<Device>(this.url)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
 
-
-  // Delete device
-  //deleteDevice(id){
-  //  return this.http
-  //  .delete<Device>(this.apiURL + '/devices/' + id, this.httpOptions)
-  //  .pipe(
-  //    tap(data => { JSON.stringify( data )
-  //catchError(this.handleError)
-  //  )
-  //}
-
+  // Delete device by id
+  deleteDevice(id: number) {
+    return this.httpClient
+      .delete<Device>(this.url + '/' + id, this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
 
   public lista = [
     {
@@ -93,5 +84,19 @@ export class DeviceService {
       category: { 'id': 3, 'name': 'Categoria 3' },
     },
   ];
+
+
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(() => new Error(errorMessage || "  Por favor, contato o responsável pelo sistema"));
+  }
 
 }
