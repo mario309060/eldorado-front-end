@@ -12,15 +12,7 @@ import { environment } from 'src/environments/environment';
 export class DeviceService {
 
   private url = `${environment.url_eldorado}`;
-
-  constructor(private httpClient: HttpClient) { }
-  // const headers = new HttpHeaders().set('Authorization', `bearer ${token}`);
-
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
+  constructor() { }
 
   devices: Device[] = [];
 
@@ -33,6 +25,41 @@ export class DeviceService {
   getDeviceList(): Device[] {
     return this.devices;
   }
+
+  public lista = [
+    {
+      'id': 1,
+      'color': 'Color 1',
+      'partNumber': '1',
+      category: { 'id': 1, 'name': 'Categoria 1' },
+    },
+    {
+      'id': 2,
+      'color': 'Color 2',
+      'partNumber': '2',
+      category: { 'id': 2, 'name': 'Categoria 2' },
+    },
+    {
+      'id': 3,
+      'color': 'Color 3',
+      'partNumber': '3',
+      category: { 'id': 3, 'name': 'Categoria 3' },
+    },
+  ];
+}
+/*
+  constructor(private httpClient: HttpClient) { }
+  // const headers = new HttpHeaders().set('Authorization', `bearer ${token}`);
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
+
+ 
+ 
+  
 
   // Create Device
   createDevice(device: Device): Observable<Device> {
@@ -64,27 +91,7 @@ export class DeviceService {
       )
   }
 
-  public lista = [
-    {
-      'id': 1,
-      'color': 'Color 1',
-      'partNumber': '1',
-      category: { 'id': 1, 'name': 'Categoria 1' },
-    },
-    {
-      'id': 2,
-      'color': 'Color 2',
-      'partNumber': '2',
-      category: { 'id': 2, 'name': 'Categoria 2' },
-    },
-    {
-      'id': 3,
-      'color': 'Color 3',
-      'partNumber': '3',
-      category: { 'id': 3, 'name': 'Categoria 3' },
-    },
-  ];
-
+  
 
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';
@@ -99,4 +106,4 @@ export class DeviceService {
     return throwError(() => new Error(errorMessage || "  Por favor, contato o responsável pelo sistema"));
   }
 
-}
+*/

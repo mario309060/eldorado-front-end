@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LeanDeviceModule } from './lean-device/lean-device.module';
 import { CategoryModule } from './category/category.module';
 import { DeviceModule } from './device/device.module';
 
@@ -13,7 +12,6 @@ import { DeviceModule } from './device/device.module';
   ],
   imports: [
     BrowserModule,
-    LeanDeviceModule,
     CategoryModule,
     DeviceModule,
     AppRoutingModule // sempre manter por último.

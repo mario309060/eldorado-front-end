@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DeviceRoutes } from './lean-device/device-routing.module';
 import { CategoryRoutes } from './category/category-routing.module';
+import { DeviceRoutes } from './device/device-routing.module';
 
 export const routes: Routes = [
 
@@ -10,8 +10,8 @@ export const routes: Routes = [
     redirectTo: 'category/list',
     pathMatch: 'full' //passa a url inteira
   },
-  ...CategoryRoutes
-  //...DeviceRoutes
+  ...CategoryRoutes,
+  ...DeviceRoutes
 ];
 
 @NgModule({
