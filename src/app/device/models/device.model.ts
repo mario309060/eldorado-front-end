@@ -1,3 +1,10 @@
+export class Category {
+    constructor(
+        public id?: number,
+        public name?: string
+    ) { }
+}
+
 export class Device {
     constructor(
         public id?: number,
@@ -7,9 +14,3 @@ export class Device {
     ) { }
 }
 
-export class Category {
-    constructor(
-        public id?: number,
-        public name?: string
-    ) { }
-} 
