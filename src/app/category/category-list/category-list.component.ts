@@ -10,6 +10,7 @@ import { Category } from '../models/category.model';
 export class CategoryListComponent implements OnInit {
 
   public categories: Category[] = [];
+
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
@@ -20,6 +21,17 @@ export class CategoryListComponent implements OnInit {
 
   getCategoryList(): Category[] {
     return this.categoryService.getCategoryList();
+  }
+
+  // Delete employee
+  deleteCategory(category: Category) {
+    if (window.confirm('Are you sure, you want to delete?')) {
+      //this.restApi.deleteEmployee(id).subscribe(data => {
+      //  this.categories = this.getCategoryList;
+      //})
+
+      console.log(category.id)
+    }
   }
 
   public itens = [

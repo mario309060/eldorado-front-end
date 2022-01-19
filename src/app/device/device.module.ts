@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DeviceService } from './services/device.service';
 import { DeviceListComponent } from './components/device-list.component';
+import { DeviceCreateComponent } from './device-create/device-create.component';
 
 @NgModule({
   declarations: [
-    DeviceListComponent
+    DeviceListComponent,
+    DeviceCreateComponent
   ],
   imports: [
     CommonModule,

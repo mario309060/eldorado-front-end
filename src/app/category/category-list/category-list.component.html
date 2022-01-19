@@ -9,52 +9,30 @@
                     <div class="col-6" style="background-color: #f5f5f5; height: 52px; padding: 8px;
                         border-color: #33CBCC;border-radius: 40px;">
                          
-                    </div>
-
+                    </div> 
 
                     <div class="col-5 ">
                     </div>
                      <div class="col-1 ">
 
                         <div class="pl-3 btn-row" style=" cursor: pointer; "  >
-                             <a href="#"   data-toggle="modal" data-target="#addPluginModal">
+                             <a [routerLink]="['/category/create']" >
                                 <i class="hover-foco fa fa-plus">
                                    <small class="hover-foco"  style=" font-family: 'Open Sans';font-weight: bold;"> Novo</small>
                                 </i>
                              </a>
-                        </div>
-
-
-
-                      <!--
-                       <div class="btn-row">
-
-                          <button data-toggle="modal" data-target="#modalCadastro" style="font-size: 10px; text-align: center;width: 80px;height: 25px;color: #fff;background-color: #33CBCC; border-color: #33CBCC;border-radius: 40px;"
-                          type="button"    class="btn" >
-
-                           <span>NOVO</span>
-
-                         </button>
-                         </div>
-                        -->
+                        </div> 
 
                      </div>
 
              </div>
             </div>
-
-<!-- 
-            <div class="spinner2" *ngIf="this.booSpinner">
-
-            </div>
--->
-
+  
             <div style="padding: 20px;" *ngIf="this.itens">
 
             <div style="border-bottom: solid 1px rgb(218, 217, 217)">
               <span style="font-size: 16px; font-family: 'Open Sans';color: #4a4a4a;margin-top: 7px;">Lista de Categorias</span>
-            </div>
-
+            </div> 
 
           <table class="table" style="margin-top: 15px;" >
               <thead>
@@ -65,20 +43,19 @@
                  </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of categories">
-                      <td class="text-tr1" >{{ item.id }}</td>
-                      <td  class="text-tr1">{{ item.name }}</td> 
+                <tr *ngFor="let category of categories">
+                      <td class="text-tr1" >{{ category.id }}</td>
+                      <td  class="text-tr1">{{ category.name }}</td> 
 
-                      <td class="text-tr1"> 
-
-                            <i class="fa fa-edit"   style=" padding:8px 5px;font-size: 23px; color:#33CBCC;" >
-                            Del
-                            </i> 
+                      <td class="text-tr1" style="display: flex"> 
+                        <span class="text-tr1" (click)="deleteCategory( category )" style=" padding:8px 5px;font-size: 13px; color:#33CBCC;">Delete</span>
+ 
                       </td> 
+                      <p *ngif="categories.lenghth==0">No Category Registered</p>
                   </tr>
               </tbody>
           </table>
-          <p *ngif="categories.lenghth==0">No Category Registered</p>
+          
             </div>
           <!-- PAGINATION
           <nav class="ml-4">

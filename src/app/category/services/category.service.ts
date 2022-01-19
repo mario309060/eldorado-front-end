@@ -38,7 +38,17 @@ export class CategoryService {
   getCategoryList(): Category[] {
     return this.categories;
   }
-
+  /*
+    // Create Device
+    createDevice(category: Category): Observable<Category> {
+      return this.httpClient
+        .post<Category>(this.url, JSON.stringify(category), this.httpOptions)
+        .pipe(
+          retry(2),
+          catchError(this.handleError)
+        )
+    }
+  */
   // Create Category
   //createCategory(category: Category): Observable<Category> {
   //  return this.http
@@ -92,4 +102,18 @@ export class CategoryService {
     },
   ];
 
+  /*
+    handleError(error: HttpErrorResponse) {
+      let errorMessage = '';
+      if (error.error instanceof ErrorEvent) {
+        // client-side error
+        errorMessage = `Error: ${error.error.message}`;
+      } else {
+        // server-side error
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      }
+      console.log(errorMessage);
+      return throwError(() => new Error(errorMessage || "  Por favor, contato o responsável pelo sistema"));
+    }
+  */
 }
