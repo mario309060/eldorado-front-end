@@ -8,8 +8,9 @@ export class Category {
 export class Device {
     constructor(
         public id?: number,
-        public color?: string,
-        public partNumber?: string,
+        public colorname?: string,
+        public partnumber?: number,
+        public categoryId?: number,
         public category?: Category
     ) { }
 }

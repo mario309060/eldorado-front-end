@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { Device } from '../models/device.model';
 import { DeviceService } from '../services/device.service';
 
@@ -9,12 +11,62 @@ import { DeviceService } from '../services/device.service';
 })
 export class DeviceListComponent implements OnInit {
 
-  public devices: Device[] = [];
-  constructor(private deviceService: DeviceService) { }
+  public devices: any[] = [];
+  destroy$: Subject<boolean> = new Subject<boolean>();
+  public retorno: any;
+
+  constructor(private deviceService: DeviceService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.devices = this.itens; //this.deviceService.getDeviceList();
-    console.log(this.devices);
+    this.getDeviceList();
+  }
+
+  /**
+  * @name getDeviceList
+  * @description get all devices
+  */
+  private getDeviceList(): void {
+    if (this.devices.length > 0) {
+      return;
+    }
+    this.deviceService.getDeviceList()
+      .subscribe({
+        next: (data) => {
+          this.devices = data;
+          console.log(data);
+        },
+        error: (e) => console.error(e)
+      })
+  }
+
+
+  /**
+   * @name  deleteDevice
+   * @description delete a device
+   */
+  deleteDevice(device: Device): void {
+
+    //if (window.confirm('Are you sure, you want to delete?')) { 
+    this.deviceService.deleteCategory(device)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((ret: any) => {
+        this.retorno = ret;
+      });
+
+    this.router.navigate(["/device/list"]);
+
+    //}
+  }
+
+  /**
+  * @name ngOnDestroy
+  * @description clean
+  */
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Unsubscribe from the subject
+    this.destroy$.unsubscribe();
   }
 
   public itens = [
@@ -37,5 +89,9 @@ export class DeviceListComponent implements OnInit {
       category: { 'id': 3, 'name': 'Categoria 3' },
     },
   ];
+
+
+
+
 
 }

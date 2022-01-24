@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  url_eldorado: 'http://177.55.114.15:3000/v1'
+  url_eldorado: 'http://177.55.114.15:5000'
 };
 
 /*

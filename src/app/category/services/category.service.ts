@@ -1,119 +1,94 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../models/category.model';
 
-//import { HttpClient, HttpHeaders  } from '@angular/common/http';
-//import { Observable } from 'rxjs';
-//import { map, tap } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map, retry, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * @name CategoryService
+ * @description Class of the category service
+*/
 export class CategoryService {
 
   constructor(
-    //private http: HttpClient
+    private http: HttpClient
   ) { }
 
+
+  //public url = 'http://177.55.114.15:5000';
+
   private url = `${environment.url_eldorado}`;
-  // const headers = new HttpHeaders().set('Authorization', `bearer ${token}`);
 
-  //httpOptions = {
-  //   headers: new HttpHeaders({
-  //    'Content-Type': 'application/json'
-  //   })
-  //}  
-
-  categories: Category[] = [];
-
-  // Define API
-  //url = 'http://localhost:3000';
-
-  ngOnInit() {
-    this.categories = this.lista;
-    console.log(this.categories);
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
   }
 
-  // Category list
-  getCategoryList(): Category[] {
-    return this.categories;
-  }
-  /*
-    // Create Device
-    createDevice(category: Category): Observable<Category> {
-      return this.httpClient
-        .post<Category>(this.url, JSON.stringify(category), this.httpOptions)
-        .pipe(
-          retry(2),
-          catchError(this.handleError)
-        )
-    }
+
+  ngOnInit() { }
+
+
+  /**
+  * @name createCategory
+  * @description create a category
   */
-  // Create Category
-  //createCategory(category: Category): Observable<Category> {
-  //  return this.http
-  // .post<Category>(this.url + '/categories', 
-  ////  JSON.stringify(category), this.httpOptions) 
-  //  .pipe(
-  //    tap(data => { JSON.stringify( data )
-  ////    }
-  //  ));
-  //}   
+  createCategory(category: Category): Observable<any> {
+    return this.http.post<any>(`${this.url}/categories`, JSON.stringify(category))
+      .pipe(
+        retry(3),
+        tap(response => JSON.stringify(response)),
+        catchError(err => { return this.handleError(err) }
+        ));
+  }
 
-  /*
-  getCategoryList():  Observable<Category[]> {
+
+  /**
+   * @name getCategoryList
+   * @description get the values of categories
+  */
+  getCategoryList(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.url}/categories`)
-    .pipe(
-      tap(data => { JSON.stringify( data )
-      }
-    ));
+      .pipe(
+        retry(3),
+        tap(response => JSON.stringify(response)),
+        catchError(this.handleError));
   }
-*/
-  // return this.http.get(`${this.url}/categories`, { headers: this.header() });
-
-  /* */
 
 
-  // Delete category
-  // HttpClient API delete() method => Delete employee
-  //deleteCategory(id){
-  //  return this.http
-  //  .delete<Category>(this.apiURL + '/categories/' + id, this.httpOptions)
-  //  .pipe(
-  //    tap(data => { JSON.stringify( data )
-  //catchError(this.handleError)
-  //  )
-  //}
-
-
-
-  public lista = [
-    {
-      'id': 1,
-      'name': 'Categoria 1'
-    },
-    {
-      'id': 2,
-      'name': 'Categoria 2'
-    },
-    {
-      'id': 3,
-      'name': 'Categoria 3'
-    },
-  ];
-
-  /*
-    handleError(error: HttpErrorResponse) {
-      let errorMessage = '';
-      if (error.error instanceof ErrorEvent) {
-        // client-side error
-        errorMessage = `Error: ${error.error.message}`;
-      } else {
-        // server-side error
-        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      }
-      console.log(errorMessage);
-      return throwError(() => new Error(errorMessage || "  Por favor, contato o responsável pelo sistema"));
-    }
+  /**
+   * @name deleteCategory
+   * @description delete the category
   */
+  deleteCategory(category: Category): Observable<any> {
+    //const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
+    return this.http.delete(`${this.url}/categories/${category.id}`)
+      .pipe(
+        retry(1),
+        tap(response => JSON.stringify(response)),
+        catchError(err => { return this.handleError(err) }
+        ));
+  }
+
+
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    window.alert(errorMessage);
+    return throwError(() => new Error(errorMessage || "  Por favor, contato o responsável pelo sistema"));
+  }
+
+
 }

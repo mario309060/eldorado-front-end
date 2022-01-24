@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoryModule } from './category/category.module';
 import { DeviceModule } from './device/device.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { DeviceModule } from './device/device.module';
     FormsModule,
     CategoryModule,
     DeviceModule,
+    HttpClientModule,
     AppRoutingModule // sempre manter por último.
   ],
   providers: [],

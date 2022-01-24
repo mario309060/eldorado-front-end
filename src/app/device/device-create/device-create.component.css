@@ -1,0 +1,85 @@
+.label-texto {
+  font-size: 12px;
+  font-weight: 100;
+  line-height: 2px;
+  padding-right: 7px;
+  text-transform: uppercase;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  color: #191919;
+  text-align: left;
+}
+
+.input-texto {
+  font-size: 12px !important;
+  font-weight: 100;
+  padding-left: 7px;
+  text-transform: uppercase;
+  font-family: sans-serif, Tahoma, Geneva, Verdana, sans-serif;
+  font-style: normal;
+  color: #191919;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+.row-style {
+  vertical-align: middle;
+}
+
+.box-style-shadow {
+  box-shadow: 0 5px 5px rgb(216, 211, 211);
+}
+
+.border-bottom-style {
+  border-bottom: solid 1px rgb(218, 217, 217);
+}
+
+.botton-create-new {
+  font-size: 16px;
+  font-family: 'Open Sans';
+  color: #4a4a4a;
+  margin-top: 7px;
+}
+
+.div-form-style {
+  background-color: #f5f5f5;
+  height: 360px;
+  padding: 8px;
+  border-color: #33CBCC;
+  border-radius: 40px;
+}
+
+.height-180 {
+  height: 180px;
+}
+
+.btn-style-1 {
+  font-size: 13px;
+  font-family: sans-serif, Tahoma, Geneva, Verdana, sans-serif;
+  width: 224px;
+  height: 32px;
+  color: #fff;
+  background-color: #444657;
+  border-color: #444657;
+  border-radius: 32px;
+}
+
+.btn-style-2 {
+  font-size: 13px;
+  font-family: sans-serif;
+  width: 224px;
+  height: 32px;
+  color: #191919;
+  background-color: #fff;
+  border-color: #444657;
+  border-radius: 32px;
+}
+
+.p-style-12 {
+  color: #444444;
+  font-size: 12px;
+}

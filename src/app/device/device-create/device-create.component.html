@@ -1,72 +1,124 @@
-<p>device-create works!</p>
 <div class="container-fluid" class="pt-1 pl-0 pt-4 pb-1">
     
-    <div class="row"  style="vertical-align: middle; ">
+  <div class="row row-style"  >
 
-       
+    <div class="col">
 
-      <div class="col">
+      <div class="card pl-3 pr-3 pb-5 box-style-shadow">
 
-      
-  
-        <div class="card pl-3 pr-3 pb-5 pt-3" style="box-shadow: 0 5px 5px rgb(216, 211, 211);">
-  
-            <div class="card-header"  >
-  
-                <div style="border-bottom: solid 1px rgb(218, 217, 217)">
-                    <span style="font-size: 16px; font-family: 'Open Sans';color: #4a4a4a;margin-top: 7px;">Create New Category</span>
-                  </div>
+          <div class="card-header">
+           
+              <div class= "border-bottom-style" >
+                  <span class="button-create-new">Create New Device</span>
+                </div>
 
-                <div class="row">
-  
-                    <div class="col-6" style="background-color: #f5f5f5; height: 300px; padding: 8px; border-color: #33CBCC;border-radius: 40px;">
-  
-                        <form #f="ngForm" (ngSubmit)="Salvar(f)">
-                            <div class="form-group">
-                              <label for="title" class="label-texto">Nome</label>
-                              <input class="input-texto"   class="form-control" style="height: 30px;"  placeholder="nome"
-                               name="nome"    >
-                            </div>
-              
-                            <div class="form-group">
-                                <label for="title" class="label-texto">Descrição</label>
-                                <input class="input-texto"    class="form-control" style="height: 30px;"  placeholder="descrição"
-                                name="descricao" >
-                           </div>
-              
-                          
-              
-                           <div class="row pb-4 pt-3" >
-              
-                                <div class="col-md-2"></div>
-                                <div class="col-md-4">
-                                    <button data-toggle="modal" data-target="#modalCadastro"
-                                    style="font-size: 13px; font-family: 'Open Sans Condensed';width: 224px;height: 32px;color: #191919   ;background-color: #fff; border-color: #444657;border-radius: 32px;"
-                                    type="button"  data-dismiss="modal"   class="btn" >
-              
-                                   <span>VOLTAR</span>
-              
-                              </button>
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="submit"  data-toggle="modal" data-target="#modalCadastro"
-                                    style="font-size: 13px; font-family: 'Open Sans Condensed';  width: 224px; height: 32px; color: #fff;background-color: #444657; border-color: #444657;border-radius: 32px;"
-                                       class="btn" >
-              
-                                     <span>CADASTRAR</span>
-              
-                                   </button>
-                                </div>
-                                <div class="col-md-2"></div>
+              <div class="row">
+
+                  <div class="col-6 div-form-style" >
+                    
+                  <br>
+
+                      <form #fmDevice="ngForm" (ngSubmit)="saveDevice(fmDevice)"> 
+
+                        <!--Color-->
+                        <div class="form-group">
+
+                            <label for="title" class="label-texto">Color</label>
+
+                            <input type="text" id="colorname" name="colorname"  pattern="[A-Za-z]+"  [(ngModel)]="device.colorname" class="form-control input-texto"  #colorname="ngModel"   placeholder="color" required maxlength="16"  > 
+                           
+                            <p class="p-style-12"  *ngIf="colorname.errors && (colorname.dirty || colorname.touched)" >Favor preencher o campo color somente com letras.</p>
+                            
+                            <div *ngIf="!colorname.errors" style="height: 18px; width: 18px;" > 
+
+                              <svg  style="color:#99CC00;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
+                            
+                            </div>  
+
+                          </div>  
+                          <br>
+                          <!--Part number-->
+                          <div class="form-group">
+
+                            <label for="title" class="label-texto">Part number</label>
+
+                            <input type="text" id="partnumber" name="partnumber" pattern="[0-9]+"  [(ngModel)]="device.partnumber" class="form-control input-texto"  #partnumber="ngModel"   placeholder="part Number" required maxlength="11"  > 
+                           
+                            <p class="p-style-12"  *ngIf="partnumber.errors && (partnumber.dirty || partnumber.touched)" >Favor preencher o campo part Number somente com números.</p>
+                            
+                            <div *ngIf="!partnumber.errors" style="height: 18px; width: 18px;" > 
+
+                              <svg  style="color:#99CC00;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
+                            
+                            </div>  
+
+                          </div>  
+                          <br>
+                          <!--Category-->
+                          <div class="form-group">
+
+                            <label for="title" class="label-texto">Category</label>
+
+                            <select name="categoryId" id="categoryId"  #categoryId="ngModel"  [(ngModel)]="device.categoryId" >
+                              <option [ngValue]="null" disabled>Choose </option>
+                              <option *ngFor="let categoty of categories" [ngValue]="categoty">
+                               {{ categoty.name}}
+                              </option>
+                            </select> 
+                            <p class="p-style-12"  *ngIf="categoryId.errors && (categoryId.dirty || categoryId.touched)" >Favor preencher o campo category.</p>
+                            
+                            <div *ngIf="!categoryId.errors" style="height: 18px; width: 18px;" > 
+
+                              <svg  style="color:#99CC00;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
+                            
+                            </div>  
+
+                          </div> 
+                       
+                        
+                         <div class="row pb-4 pt-3" >
+            
+                              <div class="col-md-1"></div>
+                              
+                              <div class="col-md-5">
+
+                                  <button  routerLink="/device" type="button" class="btn btn-style-2" > 
+
+                                     <span>VOLTAR</span>
+            
+                                  </button>
+
                               </div>
-                          </form>
-  
-                    </div> 
-  
-               </div>
-  
-            </div>
-        </div>
+
+                              <div class="col-md-5">
+
+                                  <button type="submit" 
+                                  
+                                     class="btn btn-style-1"
+                                     [disabled]="!fmDevice.form.valid" >
+            
+                                   <span>CADASTRAR</span>
+            
+                                 </button>
+
+                              </div>
+
+                              <div class="col-md-1"></div>
+
+                            </div>
+
+                        </form>
+                       
+                  </div> 
+
+             </div>
+
+          </div>
+
       </div>
+
     </div>
-</div>
+
+  </div>
+
+</div> 

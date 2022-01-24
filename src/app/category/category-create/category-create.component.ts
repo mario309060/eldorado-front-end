@@ -1,8 +1,11 @@
+import { error } from '@angular/compiler/src/util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Category } from '../models/category.model';
 import { CategoryService } from '../services/category.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-category-create',
@@ -14,6 +17,9 @@ export class CategoryCreateComponent implements OnInit {
   //@ViewChild('fmCategory', { static: true }) fmCategory: NgForm;
   @ViewChild(NgForm) fmCategory!: NgForm;
   category: Category = {};
+  public retorno: any;
+  message: string = "";
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private categoryService: CategoryService,
@@ -24,53 +30,56 @@ export class CategoryCreateComponent implements OnInit {
     this.category = new Category();
   }
 
+  /**
+   * @name saveCategory
+   * @description save a category
+  */
+  saveCategory(f: NgForm) {
 
-  limpadados(f: NgForm) {
-
-    this.category = new Category();
-
-    f.value.name = '';
-
-  }
-
-
-  Salvar(f: NgForm) {
-
+    //this.message = "";
     this.validarCampos(f.value.name, 'Name');
 
     if (f.form.valid) {
-      /*
-            this.categoryService.create(data)
-              .subscribe((response) => {
-                console.log(response)
-                alert('Category created!');
-              },
-                err => {
-                  console.error(err);
-                }
-              );
-      */
 
-      console.log(f);
+      this.category.name = f.value.name;
 
-      this.limpadados(f);
+      this.categoryService.createCategory(this.category)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((ret: any) => {
+          this.retorno = ret;
+        });
 
-      this.router.navigate(["/category"]);
+      this.router.navigate(["/category/list"]);
+
+    }
+
+  }
+
+
+  /**
+   * @name validarCampos
+   * @description valid the fields
+  */
+  validarCampos(valor: any, campo: string) {
+
+    if (!valor) {
+
+      this.message = 'Favor preencher o campo ' + campo;
+      return false;
+
     }
 
     return true;
   }
 
-
-  validarCampos(valor: any, campo: string) {
-
-    if (!valor) {
-      alert('Favor preencher o campo ' + campo);
-
-      return false;
-    }
-
-    return true;
+  /**
+  * @name ngOnDestroy
+  * @description clean
+  */
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Unsubscribe from the subject
+    this.destroy$.unsubscribe();
   }
 
 }
