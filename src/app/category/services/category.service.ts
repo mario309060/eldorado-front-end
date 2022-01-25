@@ -68,12 +68,12 @@ export class CategoryService {
   */
   deleteCategory(category: Category): Observable<any> {
     //const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
-    return this.http.delete(`${this.url}/categories/${category.id}`)
-      .pipe(
-        retry(1),
-        tap(response => JSON.stringify(response)),
-        catchError(err => { return this.handleError(err) }
-        ));
+    return this.http.delete(`${this.url}/categories/${category.id}`);
+    //.pipe(
+    //retry(1),
+    //tap(response => JSON.stringify(response)),
+    //catchError(err => { return this.handleError(err) }
+    //));
   }
 
 

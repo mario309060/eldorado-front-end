@@ -69,9 +69,10 @@ export class CategoryListComponent implements OnInit {
 
     //if (window.confirm('Are you sure, you want to delete?')) { 
     this.categoryService.deleteCategory(category)
-      .pipe(takeUntil(this.destroy$))
+      //.pipe(takeUntil(this.destroy$))
       .subscribe((ret: any) => {
         this.retorno = ret;
+        console.log(this.retorno);
       });
 
     this.router.navigate(["/category/list"]);
