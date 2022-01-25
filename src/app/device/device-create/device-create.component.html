@@ -42,7 +42,7 @@
 
                             <label for="title" class="label-texto">Part number</label>
 
-                            <input type="text" id="partnumber" name="partnumber" pattern="[0-9]+"  [(ngModel)]="device.partnumber" class="form-control input-texto"  #partnumber="ngModel"   placeholder="part Number" required maxlength="11"  > 
+                            <input type="text" id="partnumber" name="partnumber" pattern="[0-9]+"  [(ngModel)]="device.partnumber" class="form-control input-texto" required  #partnumber="ngModel"   placeholder="part Number" required maxlength="11"  > 
                            
                             <p class="p-style-12"  *ngIf="partnumber.errors && (partnumber.dirty || partnumber.touched)" >Favor preencher o campo part Number somente com números.</p>
                             
@@ -54,15 +54,16 @@
 
                           </div>  
                           <br>
-                          <!--Category-->
+                          <!--Category
                           <div class="form-group">
 
                             <label for="title" class="label-texto">Category</label>
 
-                            <select name="categoryId" id="categoryId"  #categoryId="ngModel"  [(ngModel)]="device.categoryId" >
+                            <select name="categoryId" id="categoryId"  #categoryId="ngModel"  
+                            [(ngModel)]="device.category" >
                               <option [ngValue]="null" disabled>Choose </option>
-                              <option *ngFor="let categoty of categories" [ngValue]="categoty">
-                               {{ categoty.name}}
+                              <option [ngValue]="category.id" *ngFor="let category of categories" >
+                               {{ category.name}}
                               </option>
                             </select> 
                             <p class="p-style-12"  *ngIf="categoryId.errors && (categoryId.dirty || categoryId.touched)" >Favor preencher o campo category.</p>
@@ -72,10 +73,25 @@
                               <svg  style="color:#99CC00;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
                             
                             </div>  
-
+                            
                           </div> 
-                       
-                        
+                       -->
+                       <div class="form-group">
+                        <label for="title" class="label-texto">Category</label>
+                        <select [(ngModel)]="device.categoryid" id="categoryId" required class="form-control" name="categoryid" #categoryid="ngModel" class="form-control" (change)= "updateObj()">
+                        <option *ngFor="let category of categories"  id="id" name="id"   ngValue= {{category.id}}>{{category.name}}</option>
+                       </select>
+                       <p class="p-style-12"  *ngIf="categoryid.errors && (categoryid.dirty || categoryid.touched)" >Favor preencher o campo category.</p>
+                           
+                       <div *ngIf="categoryid.value" style="height: 18px; width: 18px;" > 
+
+                        <svg  style="color:#99CC00;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16"> <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/> </svg>
+                      
+                      </div>  
+                       </div>
+
+                        <br>
+                        <br>
                          <div class="row pb-4 pt-3" >
             
                               <div class="col-md-1"></div>

@@ -37,10 +37,12 @@ export class DeviceService {
   createDevice(device: Device): Observable<any> {
     return this.http.post<any>(`${this.url}/devices`, JSON.stringify(device))
       .pipe(
-        retry(3),
-        tap(response => JSON.stringify(response)),
-        catchError(err => { return this.handleError(err) }
-        ));
+        //retry(1),
+        tap(response => JSON.stringify(response))
+        //,
+        //catchError(err => { return this.handleError(err) }
+        //)
+      );
   }
 
 
@@ -51,7 +53,7 @@ export class DeviceService {
   getDeviceList(): Observable<Device[]> {
     return this.http.get<Device[]>(`${this.url}/devices`)
       .pipe(
-        retry(3),
+        //retry(3),
         tap(response => JSON.stringify(response)),
         catchError(this.handleError));
   }
@@ -65,7 +67,7 @@ export class DeviceService {
     //const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
     return this.http.delete(`${this.url}/devices/${device.id}`)
       .pipe(
-        retry(1),
+        //retry(1),
         tap(response => JSON.stringify(response)),
         catchError(err => { return this.handleError(err) }
         ));

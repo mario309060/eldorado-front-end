@@ -11,12 +11,14 @@ import { DeviceService } from '../services/device.service';
 })
 export class DeviceListComponent implements OnInit {
 
-  public devices: any[] = [];
+  public devices: Device[] = [];
   destroy$: Subject<boolean> = new Subject<boolean>();
   public retorno: any;
 
   constructor(private deviceService: DeviceService,
-    private router: Router) { }
+    private router: Router) {
+
+  }
 
   ngOnInit(): void {
     this.getDeviceList();
@@ -27,18 +29,14 @@ export class DeviceListComponent implements OnInit {
   * @description get all devices
   */
   private getDeviceList(): void {
-    if (this.devices.length > 0) {
-      return;
-    }
     this.deviceService.getDeviceList()
-      .subscribe({
-        next: (data) => {
+      .subscribe(
+        data => {
           this.devices = data;
-          console.log(data);
-        },
-        error: (e) => console.error(e)
-      })
+        })
+
   }
+
 
 
   /**

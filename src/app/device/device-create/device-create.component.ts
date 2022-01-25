@@ -16,6 +16,7 @@ export class DeviceCreateComponent implements OnInit {
   public device: Device = {};
   public retorno: any;
   message: string = "";
+  selected: string = "";
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -33,25 +34,51 @@ export class DeviceCreateComponent implements OnInit {
   */
   saveDevice(f: NgForm) {
 
+    console.log("vai gravar");
     //this.message = "";
-    this.validarCampos(f.value.name, 'Name');
+    this.validarCampos(this.device.colorname, 'Color name');
+    this.validarCampos(this.device.partnumber, 'Part number');
+    this.validarCampos(this.device.categoryid, 'Category');
+    console.log("passou na validacao");
 
     if (f.form.valid) {
 
       this.device.colorname = f.value.colorname;
+      this.device.partnumber = f.value.partnumber;
+      this.device.categoryid = f.value.categoryid;
 
-      this.deviceService.createDevice(this.device)
-        .pipe(takeUntil(this.destroy$))
+      //this.device.colorname
+      //this.device.partnumber
+      //this.device.categoryid
+      const devideDados = {
+        "ïd": "",
+        "colorname": f.value.colorname,
+        "partnumber": Number(f.value.partnumber),
+        "categoryid": Number(f.value.categoryid)
+      }
+
+      console.log(f.value.colorname)
+      console.log(Number(f.value.partnumber));
+      console.log(Number(f.value.categoryid));
+
+      this.deviceService.createDevice(devideDados)
+        //.pipe(takeUntil(this.destroy$))
         .subscribe((ret: any) => {
           this.retorno = ret;
+          console.log(this.retorno);
         });
-
+      console.log("this.retorno");
       this.router.navigate(["/device/list"]);
 
     }
 
   }
 
+
+  updateObj() {
+    console.log(this.device);
+
+  }
 
   /**
    * @name validarCampos
@@ -83,15 +110,15 @@ export class DeviceCreateComponent implements OnInit {
 
   public categories = [
     {
-      'id': 1,
+      'id': 3,
       'name': 'Categoria 1'
     },
     {
-      'id': 2,
+      'id': 5,
       'name': 'Categoria 2'
     },
     {
-      'id': 3,
+      'id': 6,
       'name': 'Categoria 3'
     },
   ];

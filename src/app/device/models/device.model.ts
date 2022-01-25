@@ -10,7 +10,7 @@ export class Device {
         public id?: number,
         public colorname?: string,
         public partnumber?: number,
-        public categoryId?: number,
+        public categoryid?: number,
         public category?: Category
     ) { }
 }
