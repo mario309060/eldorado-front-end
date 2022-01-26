@@ -18,9 +18,14 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Compilation Production build  
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `ng build --configuration=production`
+
+--configuration
+One or more named builder configurations as a comma-separated list as specified in the "configurations" section of angular.json.
+The builder uses the named configurations to run the given target.
+
 
 ## Further help
 

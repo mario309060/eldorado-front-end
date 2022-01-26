@@ -20,6 +20,7 @@ export class CategoryCreateComponent implements OnInit {
   public retorno: any;
   message: string = "";
   destroy$: Subject<boolean> = new Subject<boolean>();
+  //ngUnsubscribe
 
   constructor(
     private categoryService: CategoryService,
@@ -81,5 +82,4 @@ export class CategoryCreateComponent implements OnInit {
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
   }
-
 }
